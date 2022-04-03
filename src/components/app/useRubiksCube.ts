@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
-export type RubiksCubeState = {
-  cornerPermutation: number[];
-  cornerOrientation: number[];
-  edgePermutation: number[];
-  edgeOrientation: number[];
+export type CornerPermutation = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+export type CornerOrientation = 0 | 1 | 2;
+export type EdgePermutation = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+export type EdgeOrientation = 0 | 1;
+
+export type RubiksCube = {
+  cornerPermutation: CornerPermutation[];
+  cornerOrientation: CornerOrientation[];
+  edgePermutation: EdgePermutation[];
+  edgeOrientation: EdgeOrientation[];
 }
 
 export const SOLVED = {
@@ -12,18 +17,18 @@ export const SOLVED = {
   cornerOrientation: [0, 0, 0, 0, 0, 0, 0, 0],
   edgePermutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
   edgeOrientation: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-} as RubiksCubeState;
+} as RubiksCube;
 
-export const move = (current: RubiksCubeState, move: RubiksCubeState): RubiksCubeState => {
+export const moveCube = (current: RubiksCube, move: RubiksCube): RubiksCube => {
   return {
     cornerPermutation: move.cornerPermutation.map(cp => current.cornerPermutation[cp]),
     cornerOrientation: move.cornerPermutation.map((cp, index) => (current.cornerOrientation[cp] + move.cornerOrientation[index]) % 3),
     edgePermutation: move.edgePermutation.map(ep => current.edgePermutation[ep]),
     edgeOrientation: move.edgePermutation.map((ep, index) => (current.edgeOrientation[ep] + move.edgeOrientation[index]) % 2),
-  } as RubiksCubeState;
+  } as RubiksCube;
 };
 
-type Move = Readonly<RubiksCubeState>;
+type Move = Readonly<RubiksCube>;
 
 export const MOVES = {
   'U': {
@@ -64,7 +69,20 @@ export const MOVES = {
   },
 } as { [key: string]: Move };
 
+type MoveName = 'U' | 'U2' | 'U\'' | 'D' | 'D2' | 'D\'' | 'L' | 'L2' | 'L\'' | 'R' | 'R2' | 'R\'' | 'F' | 'F2' | 'F\'' | 'B' | 'B2' | 'B\''
+
 export const useRubiksCube = () => {
   const [state, setState] = useState(SOLVED);
 
+  const move = useCallback((moveName: MoveName) => {
+    if (moveName.match(/[UDLRFB]2/)) {
+      setState(s => moveCube(moveCube(s, MOVES[moveName[0]]), MOVES[moveName[0]]));
+    } else if (moveName.match(/[UDLRFB]'/)) {
+      setState(s => moveCube(moveCube(moveCube(s, MOVES[moveName[0]]), MOVES[moveName[0]]), MOVES[moveName[0]]));
+    } else {
+      setState(s => moveCube(s, MOVES[moveName]));
+    }
+  }, []);
+
+  return { cube: state, move };
 };
