@@ -69,17 +69,31 @@ export const MOVES = {
   },
 } as { [key: string]: Move };
 
-type MoveName = 'U' | 'U2' | 'U\'' | 'D' | 'D2' | 'D\'' | 'L' | 'L2' | 'L\'' | 'R' | 'R2' | 'R\'' | 'F' | 'F2' | 'F\'' | 'B' | 'B2' | 'B\''
+export type MoveName = 'U' | 'U\'' | 'D' | 'D\'' | 'L' | 'L\'' | 'R' | 'R\'' | 'F' | 'F\'' | 'B' | 'B\''
 
-export const MOVE_NAMES = ['U', 'U2', 'U\'', 'D', 'D2', 'D\'', 'L', 'L2', 'L\'', 'R', 'R2', 'R\'', 'F', 'F2', 'F\'', 'B', 'B2', 'B\''] as MoveName[];
+export const MOVE_NAMES = ['U', 'U\'', 'D', 'D\'', 'L', 'L\'', 'R', 'R\'', 'F', 'F\'', 'B', 'B\''] as MoveName[];
 
-export const useRubiksCube = () => {
-  const [state, setState] = useState(SOLVED);
+export type MoveArea = {
+  corner: boolean[];
+  edge: boolean[];
+}
+
+export const getMoveArea = (moveName: MoveName): MoveArea => {
+  const move = MOVES[moveName[0]];
+  return {
+    corner: SOLVED.cornerPermutation.map((c, i) => c !== move.cornerPermutation[i]),
+    edge: SOLVED.edgePermutation.map((e, i) => e !== move.edgePermutation[i]),
+  };
+};
+
+export const useRubiksCube = (initialState = SOLVED) => {
+  const [state, setState] = useState(initialState);
 
   const move = useCallback((moveName: MoveName) => {
-    if (moveName.match(/[UDLRFB]2/)) {
-      setState(s => moveCube(moveCube(s, MOVES[moveName[0]]), MOVES[moveName[0]]));
-    } else if (moveName.match(/[UDLRFB]'/)) {
+    if (state === undefined) {
+      return;
+    }
+    if (moveName.match(/[UDLRFB]'/)) {
       setState(s => moveCube(moveCube(moveCube(s, MOVES[moveName[0]]), MOVES[moveName[0]]), MOVES[moveName[0]]));
     } else {
       setState(s => moveCube(s, MOVES[moveName]));
