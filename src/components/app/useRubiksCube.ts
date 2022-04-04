@@ -86,13 +86,10 @@ export type MoveArea = {
   edge: boolean[];
 }
 
-export const getMoveArea = (moveName: MoveName): MoveArea => {
-  const move = MOVES[moveName[0]];
-  return {
-    corner: SOLVED.cornerPermutation.map((c, i) => c !== move.cornerPermutation[i]),
-    edge: SOLVED.edgePermutation.map((e, i) => e !== move.edgePermutation[i]),
-  };
-};
+export const getMoveArea = (moveName: MoveName): MoveArea => ({
+  corner: SOLVED.cornerPermutation.map((c, i) => c !== MOVES[moveName[0]].cornerPermutation[i]),
+  edge: SOLVED.edgePermutation.map((e, i) => e !== MOVES[moveName[0]].edgePermutation[i]),
+});
 
 const shuffle = ([...array]) => {
   for (let i = array.length - 1; i >= 0; i--) {
