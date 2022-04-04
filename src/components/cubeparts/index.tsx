@@ -10,15 +10,15 @@ const toColor = (color: CubeColor): string => {
     case 'white':
       return 'bg-slate-200';
     case 'blue':
-      return 'bg-blue-600';
+      return 'bg-teal-300';
     case 'red':
-      return 'bg-red-600';
+      return 'bg-rose-500';
     case 'orange':
-      return 'bg-orange-600';
+      return 'bg-orange-400';
     case 'green':
-      return 'bg-green-600';
+      return 'bg-lime-400';
     case 'yellow':
-      return 'bg-yellow-300';
+      return 'bg-yellow-200';
     default:
       throw new Error('not supported type.');
   }
