@@ -100,5 +100,13 @@ export const useRubiksCube = (initialState = SOLVED) => {
     }
   }, []);
 
-  return { cube: state, move };
+  const moveByCommand = useCallback((command: string) => {
+    command.toUpperCase().match(/[UDLRFB]'|[UDLRFB]/g)?.forEach((c, i) => {
+      setTimeout(() => {
+        move(c as MoveName);
+      }, 500 * i);
+    });
+  }, []);
+
+  return { cube: state, move, moveByCommand };
 };
