@@ -3,7 +3,7 @@ import { Cube } from '../cube';
 import { getMoveArea, MOVE_NAMES, MoveName, useRubiksCube } from './useRubiksCube';
 
 export const App = () => {
-  const { cube, progress, move, moveByCommand } = useRubiksCube();
+  const { cube, progress, scramble, move, moveByCommand } = useRubiksCube();
   const [mouseOver, setMouseOver] = useState<MoveName>();
   const [command, setCommand] = useState<string[]>([]);
   const [inputText, setInputText] = useState('');
@@ -57,6 +57,13 @@ export const App = () => {
               onMouseOut={() => setMouseOver(undefined)}
             >{name}</button>
           ))}
+        </div>
+        <div className="flex mt-3 space-x-3">
+          <button
+            className="px-2 py-1 text-xl text-gray-100 w-30 bg-lime-500 text-white font-semibold rounded hover:bg-lime-400"
+            onClick={() => scramble()}
+          >Scramble
+          </button>
         </div>
       </div>
     </div>

@@ -86,9 +86,26 @@ export const getMoveArea = (moveName: MoveName): MoveArea => {
   };
 };
 
+const shuffle = ([...array]) => {
+  for (let i = array.length - 1; i >= 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+
 export const useRubiksCube = (initialState = SOLVED) => {
   const [state, setState] = useState(initialState);
   const [progress, setProgress] = useState<number>(100);
+
+  const scramble = useCallback(() => {
+    setState({
+      cornerPermutation: shuffle(SOLVED.cornerPermutation),
+      cornerOrientation: shuffle(SOLVED.cornerOrientation),
+      edgePermutation: shuffle(SOLVED.edgePermutation),
+      edgeOrientation: shuffle(SOLVED.edgeOrientation),
+    });
+  }, []);
 
   const move = useCallback((moveName: MoveName) => {
     if (state === undefined) {
@@ -111,5 +128,5 @@ export const useRubiksCube = (initialState = SOLVED) => {
     });
   }, []);
 
-  return { cube: state, progress, move, moveByCommand };
+  return { cube: state, progress, scramble, move, moveByCommand };
 };
