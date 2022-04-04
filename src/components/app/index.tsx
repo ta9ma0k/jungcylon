@@ -3,7 +3,7 @@ import { Cube } from '../cube';
 import { getMoveArea, MOVE_NAMES, MoveName, useRubiksCube } from './useRubiksCube';
 
 export const App = () => {
-  const { cube, move, moveByCommand } = useRubiksCube();
+  const { cube, progress, move, moveByCommand } = useRubiksCube();
   const [mouseOver, setMouseOver] = useState<MoveName>();
   const [command, setCommand] = useState<string[]>([]);
   const [inputText, setInputText] = useState('');
@@ -33,15 +33,20 @@ export const App = () => {
       <div>
         <div className="text-xl text-lime-500 font-semibold h-5/6">
           {command.map(c => (<p className="tracking-[.15em]">{c}</p>))}
-          <span className="text-xl text-lime-500 mr-4">{'>'}</span>
-          <input
-            className="w-10/12 bg-black text-xl text-lime-500 caret-lime-500 focus:outline-0 tracking-[.15em]"
-            value={inputText}
-            onKeyPress={handleOnEnter}
-            onChange={handleOnChange}
-            autoFocus
-            maxLength={50}
-          />
+          {progress !== 100 && <div className="bg-lime-500 h-4" style={{ width: `${progress}%` }}/>}
+          {progress === 100 && (
+            <>
+              <span className="text-xl text-lime-500 mr-4">{'>'}</span>
+              <input
+                className="w-10/12 bg-black text-xl text-lime-500 caret-lime-500 focus:outline-0 tracking-[.15em]"
+                value={inputText}
+                onKeyPress={handleOnEnter}
+                onChange={handleOnChange}
+                autoFocus
+                maxLength={50}
+              />
+            </>
+          )}
         </div>
         <div className="flex mt-3 space-x-3">
           {MOVE_NAMES.map(name => (

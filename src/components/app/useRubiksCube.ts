@@ -88,6 +88,7 @@ export const getMoveArea = (moveName: MoveName): MoveArea => {
 
 export const useRubiksCube = (initialState = SOLVED) => {
   const [state, setState] = useState(initialState);
+  const [progress, setProgress] = useState<number>(100);
 
   const move = useCallback((moveName: MoveName) => {
     if (state === undefined) {
@@ -101,12 +102,14 @@ export const useRubiksCube = (initialState = SOLVED) => {
   }, []);
 
   const moveByCommand = useCallback((command: string) => {
-    command.toUpperCase().match(/[UDLRFB]'|[UDLRFB]/g)?.forEach((c, i) => {
+    const results = command.toUpperCase().match(/[UDLRFB]'|[UDLRFB]/g);
+    results?.forEach((c, i) => {
       setTimeout(() => {
         move(c as MoveName);
+        setProgress((i + 1) / results.length * 100);
       }, 500 * i);
     });
   }, []);
 
-  return { cube: state, move, moveByCommand };
+  return { cube: state, progress, move, moveByCommand };
 };
