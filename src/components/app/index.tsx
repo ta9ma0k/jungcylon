@@ -22,7 +22,7 @@ export const App = () => {
 
   const onClick = useCallback((name: MoveName) => () => {
     move(name);
-    // setCommand(s => [...s, name]);
+    setCommand(s => [...s, name]);
   }, []);
 
   return (
