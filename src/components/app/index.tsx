@@ -31,8 +31,8 @@ export const App = () => {
         <Cube cube={cube} moveArea={mouseOver ? getMoveArea(mouseOver) : undefined}/>
       </div>
       <div>
-        <div className="text-xl text-lime-500 font-semibold h-5/6">
-          {command.map(c => (<p className="tracking-[.15em]">{c}</p>))}
+        <div className="text-xl text-lime-500 font-semibold h-5/6 overflow-y-hidden">
+          {command.slice(-15).map(c => (<p className="tracking-[.15em]">{c}</p>))}
           {progress !== 100 && <div className="bg-lime-500 h-4" style={{ width: `${progress}%` }}/>}
           {progress === 100 && (
             <>
