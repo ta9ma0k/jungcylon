@@ -3,7 +3,7 @@ import { Cube } from '../cube';
 import { getMoveArea, MOVE_NAMES, MoveName, useRubiksCube } from './useRubiksCube';
 
 export const App = () => {
-  const { cube, progress, scramble, move, moveByCommand } = useRubiksCube();
+  const { cube, progress, scramble, moveByCommand } = useRubiksCube();
   const [mouseOver, setMouseOver] = useState<MoveName>();
   const [command, setCommand] = useState<string[]>([]);
   const [inputText, setInputText] = useState('');
@@ -21,7 +21,7 @@ export const App = () => {
   }, [setInputText]);
 
   const onClick = useCallback((name: MoveName) => () => {
-    move(name);
+    moveByCommand(name);
     setCommand(s => [...s, name]);
   }, []);
 

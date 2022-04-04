@@ -28,6 +28,14 @@ export const moveCube = (current: RubiksCube, move: RubiksCube): RubiksCube => {
   } as RubiksCube;
 };
 
+const moveByMoveName = (current: RubiksCube, moveName: MoveName): RubiksCube => {
+  if (moveName.match(/[UDLRFB]'/)) {
+    return moveCube(moveCube(moveCube(current, MOVES[moveName[0]]), MOVES[moveName[0]]), MOVES[moveName[0]]);
+  } else {
+    return moveCube(current, MOVES[moveName]);
+  }
+};
+
 type Move = Readonly<RubiksCube>;
 
 export const MOVES = {
@@ -107,26 +115,15 @@ export const useRubiksCube = (initialState = SOLVED) => {
     });
   }, []);
 
-  const move = useCallback((moveName: MoveName) => {
-    if (state === undefined) {
-      return;
-    }
-    if (moveName.match(/[UDLRFB]'/)) {
-      setState(s => moveCube(moveCube(moveCube(s, MOVES[moveName[0]]), MOVES[moveName[0]]), MOVES[moveName[0]]));
-    } else {
-      setState(s => moveCube(s, MOVES[moveName]));
-    }
-  }, []);
-
   const moveByCommand = useCallback((command: string) => {
     const results = command.toUpperCase().match(/[UDLRFB]'|[UDLRFB]/g);
     results?.forEach((c, i) => {
       setTimeout(() => {
-        move(c as MoveName);
+        setState(s => moveByMoveName(s, c as MoveName));
         setProgress((i + 1) / results.length * 100);
       }, 500 * i);
     });
   }, []);
 
-  return { cube: state, progress, scramble, move, moveByCommand };
+  return { cube: state, progress, scramble, moveByCommand };
 };
