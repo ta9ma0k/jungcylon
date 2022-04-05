@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export type CornerPermutation = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 export type CornerOrientation = 0 | 1 | 2;
@@ -29,7 +29,7 @@ export const moveCube = (current: RubiksCube, move: RubiksCube): RubiksCube => {
 };
 
 const moveByMoveName = (current: RubiksCube, moveName: MoveName): RubiksCube => {
-  if (moveName.match(/[UDLRFB]'/)) {
+  if (moveName.match(/[WBRGOY]'/)) {
     return moveCube(moveCube(moveCube(current, MOVES[moveName[0]]), MOVES[moveName[0]]), MOVES[moveName[0]]);
   } else {
     return moveCube(current, MOVES[moveName]);
@@ -101,7 +101,17 @@ const shuffle = ([...array]) => {
 
 export const useRubiksCube = (initialState = SOLVED) => {
   const [state, setState] = useState(initialState);
+  const [solved, setSolved] = useState(false);
   const [progress, setProgress] = useState<number>(100);
+
+  useEffect(() => {
+    setSolved(
+      state.cornerPermutation.toString() === SOLVED.cornerPermutation.toString()
+      && state.cornerOrientation.toString() === SOLVED.cornerOrientation.toString()
+      && state.edgePermutation.toString() === SOLVED.edgePermutation.toString()
+      && state.edgeOrientation.toString() === SOLVED.edgeOrientation.toString(),
+    );
+  }, [state]);
 
   const scramble = useCallback(() => {
     setState({
@@ -113,7 +123,7 @@ export const useRubiksCube = (initialState = SOLVED) => {
   }, []);
 
   const moveByCommand = useCallback((command: string) => {
-    const results = command.toUpperCase().match(/[UDLRFB]'|[UDLRFB]/g);
+    const results = command.toUpperCase().match(/[WBRGOY]'|[WBRGOY]/g);
     results?.forEach((c, i) => {
       setTimeout(() => {
         setState(s => moveByMoveName(s, c as MoveName));
@@ -122,5 +132,5 @@ export const useRubiksCube = (initialState = SOLVED) => {
     });
   }, []);
 
-  return { cube: state, progress, scramble, moveByCommand };
+  return { cube: state, solved, progress, scramble, moveByCommand };
 };
