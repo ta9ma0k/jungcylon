@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useCallback, useState } from 'react';
 import { Cube } from '../cube';
 import { useCubeCommand } from './useCubeCommand';
-import { getMoveArea, MOVE_NAMES, MoveName } from './useRubiksCube';
+import { getMoveArea, MOVE_NAMES, MoveName } from './useCube';
 
 export const App = () => {
   const [mouseOver, setMouseOver] = useState<MoveName>();

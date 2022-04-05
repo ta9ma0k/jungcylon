@@ -1,4 +1,4 @@
-import { CornerOrientation, EdgeOrientation, MoveArea, RubiksCube } from '../app/useRubiksCube';
+import { CornerOrientation, EdgeOrientation, MoveArea, Cube as CubeType } from '../app/useCube';
 import { CubeColor, CubeParts } from '../cubeparts';
 
 const CORNER_PARTS = [
@@ -54,7 +54,7 @@ const getEOrientationOfReverse = (orientation: EdgeOrientation): EdgeOrientation
   return 0;
 };
 
-export const Cube = ({ cube, moveArea }: { cube: RubiksCube, moveArea?: MoveArea }) => (
+export const Cube = ({ cube, moveArea }: { cube: CubeType, moveArea?: MoveArea }) => (
   <div>
     <div className="ml-48">
       <div className="w-48 flex">
