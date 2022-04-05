@@ -51,6 +51,7 @@ export const App = () => {
         <div className="flex mt-3 space-x-3">
           {MOVE_NAMES.map(name => (
             <button
+              key={`button-${name}`}
               className="px-2 py-1 text-xl text-gray-100 w-10 bg-lime-500 text-white font-semibold rounded hover:bg-lime-400"
               onClick={onClick(name)}
               onMouseOver={() => setMouseOver(name)}
