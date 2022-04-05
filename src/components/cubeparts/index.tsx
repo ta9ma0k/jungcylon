@@ -2,6 +2,7 @@ export type CubeColor = 'white' | 'blue' | 'red' | 'orange' | 'green' | 'yellow'
 
 type Props = {
   color: CubeColor;
+  label?: string;
   isHover?: boolean
 }
 
@@ -24,6 +25,8 @@ const toColor = (color: CubeColor): string => {
   }
 };
 
-export const CubeParts = ({ color, isHover = false }: Props) => (
-  <div className={`${toColor(color)} ${isHover ? 'opacity-70' : ''} duration-200 border-2 border-slate-900 w-16 h-16`}/>
+export const CubeParts = ({ color, label, isHover = false }: Props) => (
+  <div className={`${toColor(color)} ${isHover ? 'opacity-70' : ''} duration-200 border-2 border-slate-900 w-16 h-16 flex items-center justify-center`}>
+    {label && <p className="text-2xl font-semibold">{label}</p>}
+  </div>
 );

@@ -64,7 +64,7 @@ export const Cube = ({ cube, moveArea }: { cube: RubiksCube, moveArea?: MoveArea
       </div>
       <div className="w-48 flex">
         <CubeParts color={EDGE_PARTS[cube.edgePermutation[4]][getEOrientationOfReverse(cube.edgeOrientation[4])]} isHover={moveArea?.edge[4]}/>
-        <CubeParts color="blue"/>
+        <CubeParts color="blue" label="B"/>
         <CubeParts color={EDGE_PARTS[cube.edgePermutation[8]][getEOrientationOfReverse(cube.edgeOrientation[8])]} isHover={moveArea?.edge[8]}/>
       </div>
       <div className="w-48 flex">
@@ -81,7 +81,7 @@ export const Cube = ({ cube, moveArea }: { cube: RubiksCube, moveArea?: MoveArea
       </div>
       <div className="w-48 flex">
         <CubeParts color={EDGE_PARTS[cube.edgePermutation[5]][getEOrientationOfReverse(cube.edgeOrientation[5])]} isHover={moveArea?.edge[5]}/>
-        <CubeParts color="red"/>
+        <CubeParts color="red" label="R"/>
         <CubeParts color={EDGE_PARTS[cube.edgePermutation[9]][getEOrientationOfReverse(cube.edgeOrientation[9])]} isHover={moveArea?.edge[9]}/>
       </div>
       <div className="w-48 flex">
@@ -99,7 +99,7 @@ export const Cube = ({ cube, moveArea }: { cube: RubiksCube, moveArea?: MoveArea
         </div>
         <div className="w-48 flex">
           <CubeParts color={EDGE_PARTS[cube.edgePermutation[4]][cube.edgeOrientation[4]]} isHover={moveArea?.edge[4]}/>
-          <CubeParts color="white"/>
+          <CubeParts color="white" label="W"/>
           <CubeParts color={EDGE_PARTS[cube.edgePermutation[6]][cube.edgeOrientation[6]]} isHover={moveArea?.edge[6]}/>
         </div>
         <div className="w-48 flex">
@@ -116,7 +116,7 @@ export const Cube = ({ cube, moveArea }: { cube: RubiksCube, moveArea?: MoveArea
         </div>
         <div className="w-48 flex">
           <CubeParts color={EDGE_PARTS[cube.edgePermutation[6]][getEOrientationOfReverse(cube.edgeOrientation[6])]} isHover={moveArea?.edge[6]}/>
-          <CubeParts color="green"/>
+          <CubeParts color="green" label="G"/>
           <CubeParts color={EDGE_PARTS[cube.edgePermutation[10]][getEOrientationOfReverse(cube.edgeOrientation[10])]} isHover={moveArea?.edge[10]}/>
         </div>
         <div className="w-48 flex">
@@ -133,7 +133,7 @@ export const Cube = ({ cube, moveArea }: { cube: RubiksCube, moveArea?: MoveArea
         </div>
         <div className="w-48 flex">
           <CubeParts color={EDGE_PARTS[cube.edgePermutation[10]][cube.edgeOrientation[10]]} isHover={moveArea?.edge[10]}/>
-          <CubeParts color="yellow"/>
+          <CubeParts color="yellow" label="Y"/>
           <CubeParts color={EDGE_PARTS[cube.edgePermutation[8]][cube.edgeOrientation[8]]} isHover={moveArea?.edge[8]}/>
         </div>
         <div className="w-48 flex">
@@ -151,7 +151,7 @@ export const Cube = ({ cube, moveArea }: { cube: RubiksCube, moveArea?: MoveArea
       </div>
       <div className="w-48 flex">
         <CubeParts color={EDGE_PARTS[cube.edgePermutation[7]][getEOrientationOfReverse(cube.edgeOrientation[7])]} isHover={moveArea?.edge[7]}/>
-        <CubeParts color="orange"/>
+        <CubeParts color="orange" label="O"/>
         <CubeParts color={EDGE_PARTS[cube.edgePermutation[11]][getEOrientationOfReverse(cube.edgeOrientation[11])]} isHover={moveArea?.edge[11]}/>
       </div>
       <div className="w-48 flex">
