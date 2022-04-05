@@ -39,19 +39,19 @@ const moveByMoveName = (current: RubiksCube, moveName: MoveName): RubiksCube => 
 type Move = Readonly<RubiksCube>;
 
 export const MOVES = {
-  'U': {
+  'W': {
     cornerPermutation: [3, 0, 1, 2, 4, 5, 6, 7],
     cornerOrientation: [0, 0, 0, 0, 0, 0, 0, 0],
     edgePermutation: [0, 1, 2, 3, 7, 4, 5, 6, 8, 9, 10, 11],
     edgeOrientation: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   },
-  'D': {
+  'Y': {
     cornerPermutation: [0, 1, 2, 3, 5, 6, 7, 4],
     cornerOrientation: [0, 0, 0, 0, 0, 0, 0, 0],
     edgePermutation: [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 8],
     edgeOrientation: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   },
-  'L': {
+  'O': {
     cornerPermutation: [4, 1, 2, 0, 7, 5, 6, 3],
     cornerOrientation: [2, 0, 0, 1, 1, 0, 0, 2],
     edgePermutation: [11, 1, 2, 7, 4, 5, 6, 0, 8, 9, 10, 3],
@@ -63,7 +63,7 @@ export const MOVES = {
     edgePermutation: [0, 5, 9, 3, 4, 2, 6, 7, 8, 1, 10, 11],
     edgeOrientation: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   },
-  'F': {
+  'G': {
     cornerPermutation: [0, 1, 3, 7, 4, 5, 2, 6],
     cornerOrientation: [0, 0, 1, 2, 0, 0, 2, 1],
     edgePermutation: [0, 1, 6, 10, 4, 5, 3, 7, 8, 9, 2, 11],
@@ -77,9 +77,9 @@ export const MOVES = {
   },
 } as { [key: string]: Move };
 
-export type MoveName = 'U' | 'U\'' | 'D' | 'D\'' | 'L' | 'L\'' | 'R' | 'R\'' | 'F' | 'F\'' | 'B' | 'B\''
+export type MoveName = 'W' | 'W\'' | 'Y' | 'Y\'' | 'O' | 'O\'' | 'R' | 'R\'' | 'G' | 'G\'' | 'B' | 'B\''
 
-export const MOVE_NAMES = ['U', 'U\'', 'D', 'D\'', 'L', 'L\'', 'R', 'R\'', 'F', 'F\'', 'B', 'B\''] as MoveName[];
+export const MOVE_NAMES = ['W', 'W\'', 'Y', 'Y\'', 'O', 'O\'', 'R', 'R\'', 'G', 'G\'', 'B', 'B\''] as MoveName[];
 
 export type MoveArea = {
   corner: boolean[];
