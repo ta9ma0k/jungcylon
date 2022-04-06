@@ -1,26 +1,18 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
+import { useCommand } from './useCommand';
 import { useCube } from './useCube';
 import { useTimer } from './useTimer';
 
 export const useCubeCommand = () => {
-  const [history, setHistory] = useState<string[]>([]);
-  const [command, setCommand] = useState('');
+  const { command, history, pushCommand, pushHistory, inputCommand } = useCommand();
   const { seconds, start, stop } = useTimer();
   const { cube, progress, scramble, moveByCommand, checkSolved } = useCube();
-
-  const pushHistory = useCallback((message: string) => {
-    setHistory(s => [...s, `> ${message}`]);
-  }, []);
-
-  const inputCommand = useCallback((text: string) => {
-    setCommand(text.slice(0, 50));
-  }, []);
 
   const execute = useCallback(() => {
     if (command.trim().length === 0) {
       return;
     }
-    pushHistory(command);
+    pushCommand(command);
     const [executeCommand, args] = command.split(' ');
     if (executeCommand.match(/^start$/)) {
       start();
@@ -28,17 +20,19 @@ export const useCubeCommand = () => {
     } else if (executeCommand.match(/^move$/)) {
       moveByCommand(args)
         .then(executed => {
-          pushHistory(`execute ${executed.join(' ')}`);
+          pushHistory(`execute ${executed.join('->')}`);
           if (checkSolved(args)) {
             stop();
             pushHistory('SOLVED!');
           }
         })
-        .catch(err => setHistory(s => ([...s, `> ${err}`])));
+        .catch(err => pushHistory(err));
+    } else if (executeCommand.match(/^scramble$/)) {
+      scramble();
     } else {
       pushHistory(`${executeCommand}: command not found`);
     }
-    setCommand('');
+    inputCommand('');
   }, [command]);
 
   return { cube, progress, history, command, seconds, inputCommand, execute };
