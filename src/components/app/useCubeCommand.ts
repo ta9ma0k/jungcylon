@@ -1,25 +1,16 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useCube } from './useCube';
+import { useTimer } from './useTimer';
 
 export const useCubeCommand = () => {
   const [history, setHistory] = useState<string[]>([]);
   const [command, setCommand] = useState('');
-  const [startTimer, setStartTimer] = useState(false);
-  const [timer, setTimer] = useState(0);
+  const { seconds, start, stop } = useTimer();
   const { cube, progress, scramble, moveByCommand, checkSolved } = useCube();
 
   const pushHistory = useCallback((message: string) => {
     setHistory(s => [...s, `> ${message}`]);
   }, []);
-
-  useEffect(() => {
-    if (startTimer) {
-      const timerId = setInterval(() => {
-        setTimer(s => ++s);
-      }, 1000);
-      return () => clearInterval(timerId);
-    }
-  }, [startTimer]);
 
   const inputCommand = useCallback((text: string) => {
     setCommand(text.slice(0, 50));
@@ -30,26 +21,25 @@ export const useCubeCommand = () => {
       return;
     }
     pushHistory(command);
-    const [mainCommand, args] = command.split(' ');
-    if (mainCommand.toUpperCase().match(/^START$/)) {
-      setTimer(0);
-      setStartTimer(true);
+    const [executeCommand, args] = command.split(' ');
+    if (executeCommand.match(/^start$/)) {
+      start();
       scramble();
-    } else if (mainCommand.toUpperCase().match(/^MOVE$/)) {
+    } else if (executeCommand.match(/^move$/)) {
       moveByCommand(args)
         .then(executed => {
           pushHistory(`execute ${executed.join(' ')}`);
           if (checkSolved(args)) {
-            setStartTimer(false);
+            stop();
             pushHistory('SOLVED!');
           }
         })
         .catch(err => setHistory(s => ([...s, `> ${err}`])));
     } else {
-      pushHistory(`${mainCommand}: command not found`);
+      pushHistory(`${executeCommand}: command not found`);
     }
     setCommand('');
   }, [command]);
 
-  return { cube, progress, history, command, timer, inputCommand, execute };
+  return { cube, progress, history, command, seconds, inputCommand, execute };
 };

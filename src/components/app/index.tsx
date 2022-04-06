@@ -2,10 +2,11 @@ import { ChangeEvent, KeyboardEvent, useCallback, useState } from 'react';
 import { Cube } from '../cube';
 import { useCubeCommand } from './useCubeCommand';
 import { getMoveArea, MOVE_NAMES, MoveName } from './useCube';
+import { secondsToString } from './useTimer';
 
 export const App = () => {
   const [mouseOver, setMouseOver] = useState<MoveName>();
-  const { cube, progress, history, command, timer, inputCommand, execute } = useCubeCommand();
+  const { cube, progress, history, command, seconds, inputCommand, execute } = useCubeCommand();
 
   const handleOnEnter = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -45,7 +46,7 @@ export const App = () => {
           )}
         </div>
         <div>
-          <h3 className="text-8xl text-lime-500">{new Date(timer * 1000).toISOString().substring(11, 19)}</h3>
+          <h3 className="lg:text-8xl md:text-2xl text-lime-500">{secondsToString(seconds)}</h3>
         </div>
         <div className="flex mt-3 space-x-3">
           {MOVE_NAMES.map(name => (
