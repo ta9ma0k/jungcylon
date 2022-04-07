@@ -117,12 +117,8 @@ export const useCube = (initialState = SOLVED) => {
     });
   }, []);
 
-  const checkSolved = useCallback((command: string) => {
-    return isSolved(command
-        .toUpperCase()
-        .match(/[WBRGOY]'|[WBRGOY]/g)
-        ?.reduce(((previousValue, currentValue) => moveByMoveName(previousValue, currentValue as MoveName)), cube as Cube)
-      ?? cube);
+  const checkSolved = useCallback((moveNames: MoveName[]) => {
+    return isSolved(moveNames.reduce(((previousValue, currentValue) => moveByMoveName(previousValue, currentValue as MoveName)), cube as Cube));
   }, [cube]);
 
   const move = useCallback((moveNames: MoveName[]) => {
@@ -135,5 +131,5 @@ export const useCube = (initialState = SOLVED) => {
       .then(() => moveNames);
   }, []);
 
-  return { cube: cube, progress, scramble, move, checkSolved };
+  return { cube, progress, scramble, move, checkSolved };
 };

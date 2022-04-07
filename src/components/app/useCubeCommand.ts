@@ -40,7 +40,7 @@ export const useCubeCommand = () => {
         move(moveNames)
           .then(executed => {
             pushHistory(`execute ${executed.join('->')}`);
-            if (checkSolved(args)) {
+            if (checkSolved(executed)) {
               stop();
               pushHistory('solved!!!!');
             }
