@@ -17,8 +17,8 @@ export const App = () => {
   }, [inputCommand]);
 
   return (
-    <div className="bg-black h-full py-10 px-8 grid grid-cols-2">
-      <div className="mt-15">
+    <div className="bg-black h-full py-10 px-20 flex">
+      <div className="mt-15 mr-20">
         <h3 className="lg:text-8xl text-6xl text-lime-500 text-center">{secondsToString(seconds)}</h3>
         <div className="mt-10 flex justify-center">
           <Cube cube={cube} moveArea={guideArea}/>
