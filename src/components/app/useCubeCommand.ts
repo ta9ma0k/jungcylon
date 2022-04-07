@@ -19,7 +19,7 @@ const HELP_MESSAGE = [
 ];
 
 export const useCubeCommand = () => {
-  const { command, history, pushCommand, pushHistory, inputCommand } = useCommand();
+  const { command, history, pushCommand, pushHistory, inputCommand } = useCommand(HELP_MESSAGE);
   const { seconds, start, stop } = useTimer();
   const { cube, progress, scramble, move, checkSolved } = useCube();
   const [guide, setGuide] = useState<MoveName | undefined>();

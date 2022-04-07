@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
-export const useCommand = () => {
-  const [history, setHistory] = useState<string[]>([]);
+export const useCommand = (initialMessage: string[] = []) => {
+  const [history, setHistory] = useState<string[]>(initialMessage);
   const [command, setCommand] = useState('');
 
   const pushHistory = useCallback((...message: string[]) => {
