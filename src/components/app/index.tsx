@@ -1,0 +1,48 @@
+import { ChangeEvent, KeyboardEvent, useCallback } from 'react';
+import { Cube } from '../cube';
+import { useCubeCommand } from './useCubeCommand';
+import { secondsToString } from './useTimer';
+
+export const App = () => {
+  const { cube, progress, history, command, seconds, guideArea, inputCommand, execute } = useCubeCommand();
+
+  const handleOnEnter = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      execute();
+    }
+  }, [execute]);
+
+  const handleOnChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    inputCommand(e.target.value);
+  }, [inputCommand]);
+
+  return (
+    <div className="bg-black h-full py-10 px-8 grid grid-cols-2">
+      <div className="mt-15">
+        <h3 className="lg:text-8xl text-6xl text-lime-500 text-center">{secondsToString(seconds)}</h3>
+        <div className="mt-10 flex justify-center">
+          <Cube cube={cube} moveArea={guideArea}/>
+        </div>
+      </div>
+      <div>
+        <div className="lg:text-xl text-lime-500">
+          {history.slice(-20).map((c, i) => (<p key={`history-${i}`} className="tracking-widest whitespace-pre-wrap">{c}</p>))}
+          {progress !== 100 && <div className="bg-lime-500 h-4" style={{ width: `${progress}%` }}/>}
+          {progress === 100 && (
+            <>
+              <span className="lg:text-xl text-lime-500 mr-4">{'>'}</span>
+              <input
+                className="w-10/12 bg-black lg:text-xl text-lime-500 caret-lime-500 focus:outline-0 tracking-widest"
+                value={command}
+                onKeyPress={handleOnEnter}
+                onChange={handleOnChange}
+                autoFocus
+                maxLength={50}
+              />
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
