@@ -105,11 +105,11 @@ const shuffle = ([...array]) => {
 };
 
 export const useCube = (initialState = SOLVED) => {
-  const [state, setState] = useState(initialState);
+  const [cube, setCube] = useState(initialState);
   const [progress, setProgress] = useState<number>(100);
 
   const scramble = useCallback(() => {
-    setState({
+    setCube({
       cornerPermutation: shuffle(SOLVED.cornerPermutation),
       cornerOrientation: shuffle(SOLVED.cornerOrientation),
       edgePermutation: shuffle(SOLVED.edgePermutation),
@@ -121,23 +121,19 @@ export const useCube = (initialState = SOLVED) => {
     return isSolved(command
         .toUpperCase()
         .match(/[WBRGOY]'|[WBRGOY]/g)
-        ?.reduce(((previousValue, currentValue) => moveByMoveName(previousValue, currentValue as MoveName)), state as Cube)
-      ?? state);
-  }, [state]);
+        ?.reduce(((previousValue, currentValue) => moveByMoveName(previousValue, currentValue as MoveName)), cube as Cube)
+      ?? cube);
+  }, [cube]);
 
-  const moveByCommand = useCallback((command: string) => {
-    const results = command.toUpperCase().match(/[WBRGOY]'|[WBRGOY]/g);
-    if (!results) {
-      return Promise.reject(`${command}: move command not found`);
-    }
-    return Promise.all(results.map((c, i) => (
+  const move = useCallback((moveNames: MoveName[]) => {
+    return Promise.all(moveNames.map((c, i) => (
       sleep(i).then(() => {
-        setState(s => moveByMoveName(s, c as MoveName));
-        setProgress((i + 1) / results.length * 100);
+        setCube(s => moveByMoveName(s, c as MoveName));
+        setProgress((i + 1) / moveNames.length * 100);
       })
     )))
-      .then(() => results);
+      .then(() => moveNames);
   }, []);
 
-  return { cube: state, progress, scramble, moveByCommand, checkSolved };
+  return { cube: cube, progress, scramble, move, checkSolved };
 };

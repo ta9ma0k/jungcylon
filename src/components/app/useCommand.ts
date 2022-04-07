@@ -4,8 +4,8 @@ export const useCommand = () => {
   const [history, setHistory] = useState<string[]>([]);
   const [command, setCommand] = useState('');
 
-  const pushHistory = useCallback((message: string) => {
-    setHistory(s => [...s, message]);
+  const pushHistory = useCallback((...message: string[]) => {
+    setHistory(s => [...s, ...message]);
   }, []);
 
   const pushCommand = useCallback((message: string) => {
