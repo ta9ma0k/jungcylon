@@ -8,6 +8,7 @@ const HELP_MESSAGE = [
   'cush version 1.0',
   'play with the puzzle of matching the colors of the cube\'s development.',
   'command       description',
+  'help                show description of cush.',
   'start               play in time measurement mode.',
   'scramble        shuffle the parts.',
   'move [arg]     move parts according to arg.',
