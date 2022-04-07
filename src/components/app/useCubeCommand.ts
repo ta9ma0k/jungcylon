@@ -5,10 +5,10 @@ import { getMoveArea, MOVE_NAMES, MoveName, useCube } from './useCube';
 import { useTimer } from './useTimer';
 
 const HELP_MESSAGE = [
-  'cush version 1.0',
+  'cubesh version 1.0',
   'play with the puzzle of matching the colors of the cube\'s development.',
   'command       description',
-  'help                show description of cush.',
+  'help                show description of cubesh.',
   'start               play in time measurement mode.',
   'scramble        shuffle the parts.',
   'move [arg]     move parts according to arg.',
