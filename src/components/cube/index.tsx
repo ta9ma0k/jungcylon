@@ -1,4 +1,4 @@
-import { CornerOrientation, EdgeOrientation, MoveArea, Cube as CubeType } from '../app/useCube';
+import { CornerOrientation, EdgeOrientation, MoveArea, Cube as CubeType } from '../terminal/useCube';
 import { CubeColor, CubeParts } from '../cubeparts';
 
 const CORNER_PARTS = [
