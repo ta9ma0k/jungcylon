@@ -17,10 +17,10 @@ export const Terminal = () => {
   }, [inputCommand]);
 
   return (
-    <div className="bg-black h-full py-10 px-20 flex">
+    <div className="bg-black h-full pt-5 px-20 flex">
       <div className="mt-15 mr-20">
-        <h3 className="lg:text-8xl text-6xl text-lime-500 text-center">{secondsToString(seconds)}</h3>
-        <div className="mt-10 flex justify-center">
+        <h3 className="text-6xl text-lime-500 text-center">{secondsToString(seconds)}</h3>
+        <div className="flex justify-center">
           <Cube cube={cube} moveArea={guideArea}/>
         </div>
       </div>
