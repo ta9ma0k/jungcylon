@@ -26,7 +26,7 @@ const toColor = (color: CubeColor): string => {
 };
 
 export const CubeParts = ({ color, label, isHover = false }: Props) => (
-  <div className={`${toColor(color)} ${isHover ? 'opacity-70' : ''} duration-200 border-slate-900 flex items-center justify-center lg:w-12 lg:h-12 w-8 w-8 lg:border-2 border`}>
+  <div className={`${toColor(color)} ${isHover ? 'opacity-70' : ''} duration-200 border-slate-900 flex items-center justify-center xl:w-12 xl:h-12 w-8 w-8 xl:border-2 border`}>
     {label && <p className="text-2xl font-semibold">{label}</p>}
   </div>
 );
